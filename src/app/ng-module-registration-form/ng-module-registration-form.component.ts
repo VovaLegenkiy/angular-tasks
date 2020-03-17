@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { User } from '../user';
-import { formValidation } from '../validation';
+import { formValidation } from '../template-validation';
+import { Error } from '../error';
+import { patterns } from '../patterns';
+
 @Component({
   selector: 'app-ng-module-registration-form',
   templateUrl: './ng-module-registration-form.component.html',
@@ -8,7 +11,8 @@ import { formValidation } from '../validation';
 })
 export class NgModuleRegistrationFormComponent implements OnInit {
   user: User = new User('', '', '', null, '', '', '');
-  errors = {};
+  errors: Error = {};
+  regExPatterns = patterns;
 
   constructor() {
   }
@@ -19,6 +23,8 @@ export class NgModuleRegistrationFormComponent implements OnInit {
 
   onSubmit({ form }) {
     this.errors = formValidation(form.controls);
+
+    console.log(this.errors);
     console.log(form);
   }
 }

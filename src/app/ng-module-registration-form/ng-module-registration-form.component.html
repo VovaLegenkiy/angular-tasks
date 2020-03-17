@@ -1,16 +1,16 @@
 <form #registrationForm="ngForm" (ngSubmit)="onSubmit(registrationForm)" [ngFormOptions]="{updateOn: 'submit'}">
     <div class="form-group">
-        <label for="firstname">First Name</label>
-        <input type="text" class="form-control" id="firstname" required pattern="[a-zA-Z]*" [(ngModel)]="user.firstname" name="firstname" #firstname="ngModel">
-        <div *ngIf="errors.firstname" class="alert alert-danger">
-            {{errors.firstname[0]}}
+        <label for="firstName">First Name</label>
+        <input type="text" class="form-control" id="firstName" required [pattern]="regExPatterns.name" [(ngModel)]="user.firstName" name="firstName" #firstName="ngModel">
+        <div *ngIf="errors.firstName" class="alert alert-danger">
+            {{errors.firstName[0]}}
         </div>
     </div>
     <div class="form-group">
-        <label for="lastname">Last Name</label>
-        <input type="text" class="form-control" id="lastname" required pattern="[a-zA-Z]*" [(ngModel)]="user.lastname" name="lastname" #lastname="ngModel">
-        <div *ngIf="errors.lastname" class="alert alert-danger">
-            {{errors.lastname[0]}}
+        <label for="lastName">Last Name</label>
+        <input type="text" class="form-control" id="lastName" required [pattern]="regExPatterns.name" [(ngModel)]="user.lastName" name="lastName" #lastName="ngModel">
+        <div *ngIf="errors.lastName" class="alert alert-danger">
+            {{errors.lastName[0]}}
         </div>
     </div>
     <div class="form-group">
@@ -22,30 +22,30 @@
     </div>
     <div class="form-group">
         <label for="phone">Phone</label>
-        <input type="text" class="form-control" id="phone" required pattern="[0-9]*" [(ngModel)]="user.phone" name="phone" #phone="ngModel">
+        <input type="text" class="form-control" id="phone" required [pattern]="regExPatterns.phone" [(ngModel)]="user.phone" name="phone" #phone="ngModel">
         <div *ngIf="errors.phone" class="alert alert-danger">
             {{errors.phone[0]}}
         </div>
     </div>
     <div class="form-group">
         <label for="birthday">Birthday</label>
-        <input type="date" class="form-control" id="birthday" required [(ngModel)]="user.birthday" name="birthday" #birthday="ngModel" (ngModelChange)="onChange($event)">
-        <div [hidden]="birthday.valid || birthday.untouched" class="alert alert-danger">
-            {{birthday.name | titlecase}} is required
+        <input type="date" class="form-control" id="birthday" required [(ngModel)]="user.birthday" name="birthday" #birthday="ngModel">
+        <div *ngIf="errors.birthday" class="alert alert-danger">
+            {{errors.birthday[0]}}
         </div>
     </div>
     <div class="form-group">
         <label for="password">Password</label>
-        <input type="password" class="form-control" id="password" required [(ngModel)]="user.password" name="password" #password="ngModel">
-        <div [hidden]="password.valid || password.untouched" class="alert alert-danger">
-            {{password.name | titlecase}} is required
+        <input type="password" class="form-control" id="password" required minlength="6" [pattern]="regExPatterns.password" [(ngModel)]="user.password" name="password" #password="ngModel">
+        <div *ngIf="errors.password" class="alert alert-danger">
+            {{errors.password[0]}}
         </div>
     </div>
     <div class="form-group">
         <label for="rePassword">Re-Password</label>
-        <input type="password" class="form-control" id="rePassword" required [(ngModel)]="user.rePassword" name="rePassword" #rePassword="ngModel">
-        <div [hidden]="rePassword.valid || rePassword.untouched" class="alert alert-danger">
-            {{rePassword.name | titlecase}} is required
+        <input type="password" class="form-control" id="rePassword" required minlength="6" [pattern]="regExPatterns.password" [(ngModel)]="user.rePassword" name="rePassword" #rePassword="ngModel">
+        <div *ngIf="errors.rePassword" class="alert alert-danger">
+            {{errors.rePassword[0]}}
         </div>
     </div>
 
