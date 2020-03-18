@@ -1,1 +1,162 @@
-<p>reactive-registration-form works!</p>
+<form [formGroup]="reactiveForm" novalidate (ngSubmit)="onSubmit()">
+  <div class="form-group">
+    <label for="firstName">First Name</label>
+    <input
+      id="firstName"
+      class="form-control"
+      type="text"
+      name="firstName"
+      formControlName="firstName"
+    />
+    <ng-template
+      [ngIf]="firstName.invalid && (firstName.touched || firstName.dirty)"
+    >
+      <div class="alert alert-danger" *ngIf="firstName.errors.required">
+        First Name is required
+      </div>
+      <div class="alert alert-danger" *ngIf="firstName.errors.pattern">
+        First Name should contains only letters
+      </div>
+    </ng-template>
+  </div>
+  <div class="form-group">
+    <label for="lastName">Last Name</label>
+    <input
+      id="lastName"
+      class="form-control"
+      type="text"
+      name="lastName"
+      formControlName="lastName"
+    />
+    <ng-template
+      [ngIf]="lastName.invalid && (lastName.touched || lastName.dirty)"
+    >
+      <div class="alert alert-danger" *ngIf="lastName.errors.required">
+        Last Name is required
+      </div>
+      <div class="alert alert-danger" *ngIf="lastName.errors.pattern">
+        Last Name should contains only letters
+      </div>
+    </ng-template>
+  </div>
+  <div class="form-group">
+    <label for="email">Email</label>
+    <input
+      id="email"
+      class="form-control"
+      type="text"
+      name="email"
+      formControlName="email"
+    />
+    <ng-template [ngIf]="email.invalid && (email.touched || email.dirty)">
+      <app-form-error
+        [expression]="email.errors.required"
+        message="Email is required"
+      ></app-form-error>
+      <app-form-error
+        [expression]="email.errors.email"
+        message="Email should contains: local-part@domain"
+      ></app-form-error>
+    </ng-template>
+  </div>
+
+  <div class="form-group">
+    <label for="phone">Phone</label>
+    <input
+      id="phone"
+      class="form-control"
+      type="text"
+      name="phone"
+      formControlName="phone"
+    />
+    <ng-template [ngIf]="phone.invalid && (phone.touched || phone.dirty)">
+      <app-form-error
+        [expression]="phone.errors.required"
+        message="Phone is required"
+      ></app-form-error>
+      <app-form-error
+        [expression]="phone.errors.pattern"
+        message="Phone should contains only numbers"
+      ></app-form-error>
+    </ng-template>
+  </div>
+  <div class="form-group">
+    <label for="birthday">Birthday</label>
+    <input
+      id="birthday"
+      class="form-control"
+      type="date"
+      name="birthday"
+      formControlName="birthday"
+    />
+    <ng-template
+      [ngIf]="birthday.invalid && (birthday.touched || birthday.dirty)"
+    >
+      <app-form-error
+        [expression]="birthday.errors.required"
+        message="Birthday is required"
+      ></app-form-error>
+      <app-form-error
+        [expression]="birthday.errors.lessThenEighteen"
+        message="User should be older then eighteen"
+      ></app-form-error>
+    </ng-template>
+  </div>
+  <div class="form-group">
+    <label for="password">Password</label>
+    <input
+      id="password"
+      class="form-control"
+      type="password"
+      name="password"
+      formControlName="password"
+    />
+    <ng-template
+      [ngIf]="password.invalid && (password.touched || password.dirty)"
+    >
+      <app-form-error
+        [expression]="password.errors.required"
+        message="Password is required"
+      ></app-form-error>
+      <app-form-error
+        [expression]="password.errors.minlength"
+        message="Password must be at least 6 character length"
+      ></app-form-error>
+      <app-form-error
+        [expression]="password.errors.pattern"
+        message="Password should contains: 1 lowercase letter, 1 uppercase letter, 1 number and 1 special character"
+      ></app-form-error>
+      <app-form-error
+        [expression]="password.errors.mismatch"
+        message="Password and Re-Password should match"
+      ></app-form-error>
+    </ng-template>
+  </div>
+  <div class="form-group">
+    <label for="rePassword">Re-Password</label>
+    <input
+      id="rePassword"
+      class="form-control"
+      type="password"
+      name="rePassword"
+      formControlName="rePassword"
+    />
+    <ng-template
+      [ngIf]="rePassword.invalid && (rePassword.touched || rePassword.dirty)"
+    >
+      <app-form-error
+        [expression]="rePassword.errors.required"
+        message="Re-Password is required"
+      ></app-form-error>
+      <app-form-error
+        [expression]="rePassword.errors.mismatch"
+        message="Password and Re-Password should match"
+      ></app-form-error>
+    </ng-template>
+  </div>
+  <div class="form-group">
+    <button class="btn btn-default">
+      Submit
+    </button>
+  </div>
+</form>

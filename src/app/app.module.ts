@@ -8,6 +8,7 @@ import { AppComponent } from './app.component';
 import { ReactiveRegistrationFormComponent } from './reactive-registration-form/reactive-registration-form.component';
 import { NgModuleRegistrationFormComponent } from './ng-module-registration-form/ng-module-registration-form.component';
 import { NavigationComponent } from './navigation/navigation.component';
+import { FormErrorComponent } from './form-error/form-error.component';
 
 @NgModule({
   declarations: [
@@ -15,6 +16,7 @@ import { NavigationComponent } from './navigation/navigation.component';
     ReactiveRegistrationFormComponent,
     NgModuleRegistrationFormComponent,
     NavigationComponent,
+    FormErrorComponent,
   ],
   imports: [
     BrowserModule,
