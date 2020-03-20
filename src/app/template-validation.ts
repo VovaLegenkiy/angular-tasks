@@ -5,7 +5,7 @@ import { Error } from './error';
 
 const START_YEAR = 1970;
 
-function getAge(birthday: string): number {
+export function getAge(birthday: string): number {
     const ageDifMs: number = Date.now() - new Date(birthday).getTime();
     const ageDate: Date = new Date(ageDifMs);
 

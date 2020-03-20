@@ -1,0 +1,11 @@
+form {
+  width: 50%;
+  margin: 0 auto;
+}
+input.ng-touched.ng-invalid, input.error {
+  border: solid red 2px;
+}
+
+input.ng-touched.ng-valid, input.success {
+  border: solid green 2px;
+}

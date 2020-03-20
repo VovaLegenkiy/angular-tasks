@@ -1,4 +1,11 @@
 form {
-    width: 50%;
-    margin: 0 auto;
+  width: 50%;
+  margin: 0 auto;
+}
+input.ng-touched.ng-invalid {
+  border: solid red 2px;
+}
+
+input.ng-touched.ng-valid {
+  border: solid green 2px;
 }
