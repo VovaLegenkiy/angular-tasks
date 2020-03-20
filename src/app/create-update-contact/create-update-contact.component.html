@@ -2,7 +2,7 @@
   <h2 class="contact-form-title">
     Create/Update contact
   </h2>
-  <button (click)="onBack($event)">Back</button>
+  <button (click)="onBack()">Back</button>
   <ng-container *ngIf="!isLoading; else loading">
     <form #userForm="ngForm">
       <div class="form-group">
@@ -52,13 +52,30 @@
           #email="ngModel"
         />
         <ng-template [ngIf]="email.invalid && (email.touched || email.dirty)">
-          <div *ngIf="email.errors.required" class="alert alert-danger">
-            Email is required
+          <div class="alert alert-danger">
+            <ng-container *ngIf="email.errors.required">
+              Email is required
+            </ng-container>
+            <ng-container *ngIf="email.errors.email">
+              Email format is invalid
+            </ng-container>
           </div>
         </ng-template>
       </div>
-      <button *ngIf="createMode" (click)="onCreate($event)">Create</button>
-      <button *ngIf="!createMode" (click)="onUpdate($event)">Update</button>
+      <button
+        *ngIf="createMode"
+        [disabled]="userForm.invalid"
+        (click)="onCreate($event)"
+      >
+        Create
+      </button>
+      <button
+        *ngIf="!createMode"
+        [disabled]="userForm.invalid"
+        (click)="onUpdate($event)"
+      >
+        Update
+      </button>
     </form>
   </ng-container>
   <ng-template #loading>

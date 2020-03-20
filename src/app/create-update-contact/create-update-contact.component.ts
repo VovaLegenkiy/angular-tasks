@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Contact } from '../contact';
 import { Location } from '@angular/common';
+import { PhoneBookService } from '../phone-book.service';
+import { EntityItem } from '../entity-item';
+import { IContact } from '../icontact';
 
 @Component({
   selector: 'app-create-update-contact',
@@ -12,26 +15,52 @@ export class CreateUpdateContactComponent implements OnInit {
   createMode: boolean = true;
   contact: Contact = new Contact('', '', '');
   isLoading: boolean = false;
-  
-  constructor(private route: ActivatedRoute, private location: Location) { }
+  _id: string;
+
+  constructor(private route: ActivatedRoute, private location: Location, private pbService: PhoneBookService) { }
 
   ngOnInit(): void {
-    const id = this.route.snapshot.paramMap.get('id');
-    if (id) {
+    this._id = this.route.snapshot.paramMap.get('id');
+
+    if (this._id) {
       this.createMode = false;
       this.isLoading = true;
-      // should get user by id and store it to variable
+      this.pbService.getContact(this._id)
+        .subscribe(({ item }: { item: IContact }) => {
+          this.isLoading = false;
+          const newItem: IContact = {
+            name: item.name,
+            phone: item.phone,
+            email: item.email
+          };
+
+          this.contact = newItem;
+        })
     }
   }
 
-  onBack(e){
+  onBack() {
     this.location.back();
   }
 
-  onCreate(e){
-
+  onCreate(e) {
+    this.pbService.getContacts({ name: this.contact.name })
+      .subscribe(({ items }: { items: EntityItem[] }) => {
+        if (items.length === 0) {
+          this.pbService.createContact(this.contact).subscribe(() => this.onBack());
+        } else {
+          console.log('User already exist');
+        }
+      });
   }
 
-  onUpdate(e){}
+  onUpdate(e) {
+    const body = {
+      ...this.contact,
+      _id: this._id
+    }
+    this.pbService.updateContact(body)
+      .subscribe(() => this.onBack());
+  }
 
 }
