@@ -1,0 +1,16 @@
+.contact-form {
+    width: 70%;
+    margin: 0 auto;
+}
+
+.contact-form-title {
+    text-align: center;
+}
+
+.form-control.ng-invalid.ng-touched {
+    border: 1px solid #f00;
+}
+
+.form-control.ng-valid.ng-touched {
+    border: 1px solid #0f0;
+}

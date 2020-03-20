@@ -1,0 +1,30 @@
+.phone-book {
+  width: 80%;
+  margin: 0 auto;
+}
+
+.phone-book .title {
+    text-align: center;
+}
+
+.link-like-button {
+  padding: 5px 10px;
+  text-decoration: none;
+  margin-top: 10px;
+  display: inline-block;
+  background-color: #eee;
+  border-radius: 4px;
+}
+
+.link-like-button:visited,
+.link-like-button:link {
+  color: #334953;
+}
+.link-like-button:hover {
+  color: #039be5;
+  background-color: #cfd8dc;
+}
+
+.link-like-button.active {
+  color: #039be5;
+}
