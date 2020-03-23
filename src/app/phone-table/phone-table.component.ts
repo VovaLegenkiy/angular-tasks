@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { EntityItem } from '../entity-item';
+import { IEntityItem } from '../i-entity-item';
 
 @Component({
   selector: 'app-phone-table',
@@ -7,7 +7,7 @@ import { EntityItem } from '../entity-item';
   styleUrls: ['./phone-table.component.css']
 })
 export class PhoneTableComponent implements OnInit {
-  @Input() contacts: EntityItem[];
+  @Input() contacts: IEntityItem[];
   @Output() onDelete = new EventEmitter<string>();
 
   constructor() { }
@@ -16,7 +16,7 @@ export class PhoneTableComponent implements OnInit {
 
   }
 
-  handleDelete(id) {
-    this.onDelete.emit(id);
+  handleDelete(contact) {
+    this.onDelete.emit(contact);
   }
 }

@@ -10,6 +10,10 @@ import { CreateUpdateContactComponent } from './create-update-contact/create-upd
 import { SearchInputComponent } from './search-input/search-input.component';
 import { PhoneTableComponent } from './phone-table/phone-table.component';
 import { NotificationComponent } from './notification/notification.component';
+import { httpInterceptorProviders } from './interceptors';
+import { LoaderService } from './services/loader.service';
+import { LoaderComponent } from './loader/loader.component';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @NgModule({
   declarations: [
@@ -19,14 +23,18 @@ import { NotificationComponent } from './notification/notification.component';
     SearchInputComponent,
     PhoneTableComponent,
     NotificationComponent,
+    LoaderComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    FormsModule, 
-    HttpClientModule
+    FormsModule,
+    HttpClientModule,
+    MatProgressSpinnerModule
   ],
-  providers: [],
+  providers: [
+    LoaderService, httpInterceptorProviders
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

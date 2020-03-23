@@ -1,4 +1,7 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { debounceTime, map, filter, distinctUntilChanged } from 'rxjs/operators';
+import { PhoneBookService } from '../services/phone-book.service';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-search-input',
@@ -6,18 +9,24 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
   styleUrls: ['./search-input.component.css']
 })
 export class SearchInputComponent implements OnInit {
-  @Input() text: string;
-  @Input() placeholder: string;
-  @Output() onSearch = new EventEmitter<string>();
+  text: string;
+  placeholder: string = 'Please enter name, phone or email...';
+  subject = new Subject();
 
-  constructor() { }
+  constructor(private pbService: PhoneBookService) { }
 
   ngOnInit(): void {
+    this.subject.pipe(
+      debounceTime(1500),
+      distinctUntilChanged())
+      .subscribe(searchText => this.pbService.search(searchText)
+        .subscribe((data) => console.log(data)));
   }
 
-  onChange(event) {
-    this.text = event.target.value;
-    this.onSearch.emit(this.text);
+  onChange(value) {
+    this.text = value;
+
+    this.subject.next(value);
   }
 
 }

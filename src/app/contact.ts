@@ -1,4 +1,4 @@
-import { IContact } from './icontact';
+import { IContact } from './i-contact';
 
 export class Contact implements IContact{
     constructor(

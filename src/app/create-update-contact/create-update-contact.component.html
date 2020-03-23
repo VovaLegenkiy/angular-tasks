@@ -3,82 +3,77 @@
     Create/Update contact
   </h2>
   <span class="back-link" (click)="onBack()"><-- Back</span>
-  <ng-container *ngIf="!isLoading; else loading">
-    <form #userForm="ngForm">
-      <div class="form-group">
-        <label for="name">Name: </label>
-        <input
-          type="text"
-          id="name"
-          class="form-control"
-          required
-          [(ngModel)]="contact.name"
-          name="name"
-          #name="ngModel"
-        />
-        <ng-template [ngIf]="name.invalid && (name.touched || name.dirty)">
-          <div *ngIf="name.errors.required" class="alert alert-danger">
-            Name is required
-          </div>
-        </ng-template>
-      </div>
-      <div class="form-group">
-        <label for="phone">Phone: </label>
-        <input
-          type="text"
-          id="phone"
-          class="form-control"
-          required
-          [(ngModel)]="contact.phone"
-          name="phone"
-          #phone="ngModel"
-        />
-        <ng-template [ngIf]="phone.invalid && (phone.touched || phone.dirty)">
-          <div *ngIf="phone.errors.required" class="alert alert-danger">
-            Phone is required
-          </div>
-        </ng-template>
-      </div>
-      <div class="form-group">
-        <label for="email">Email: </label>
-        <input
-          type="text"
-          id="email"
-          class="form-control"
-          required
-          email
-          [(ngModel)]="contact.email"
-          name="email"
-          #email="ngModel"
-        />
-        <ng-template [ngIf]="email.invalid && (email.touched || email.dirty)">
-          <div class="alert alert-danger">
-            <ng-container *ngIf="email.errors.required">
-              Email is required
-            </ng-container>
-            <ng-container *ngIf="email.errors.email">
-              Email format is invalid
-            </ng-container>
-          </div>
-        </ng-template>
-      </div>
-      <button
-        *ngIf="createMode"
-        [disabled]="userForm.invalid"
-        (click)="onCreate($event)"
-      >
-        Create
-      </button>
-      <button
-        *ngIf="!createMode"
-        [disabled]="userForm.invalid"
-        (click)="onUpdate($event)"
-      >
-        Update
-      </button>
-    </form>
-  </ng-container>
-  <ng-template #loading>
-    <div>Loading...</div>
-  </ng-template>
+  <form #userForm="ngForm">
+    <div class="form-group">
+      <label for="name">Name: </label>
+      <input
+        type="text"
+        id="name"
+        class="form-control"
+        required
+        [(ngModel)]="contact.name"
+        name="name"
+        #name="ngModel"
+      />
+      <ng-template [ngIf]="name.invalid && (name.touched || name.dirty)">
+        <div *ngIf="name.errors.required" class="alert alert-danger">
+          Name is required
+        </div>
+      </ng-template>
+    </div>
+    <div class="form-group">
+      <label for="phone">Phone: </label>
+      <input
+        type="text"
+        id="phone"
+        class="form-control"
+        required
+        [(ngModel)]="contact.phone"
+        name="phone"
+        #phone="ngModel"
+      />
+      <ng-template [ngIf]="phone.invalid && (phone.touched || phone.dirty)">
+        <div *ngIf="phone.errors.required" class="alert alert-danger">
+          Phone is required
+        </div>
+      </ng-template>
+    </div>
+    <div class="form-group">
+      <label for="email">Email: </label>
+      <input
+        type="text"
+        id="email"
+        class="form-control"
+        required
+        email
+        [(ngModel)]="contact.email"
+        name="email"
+        #email="ngModel"
+      />
+      <ng-template [ngIf]="email.invalid && (email.touched || email.dirty)">
+        <div class="alert alert-danger">
+          <ng-container *ngIf="email.errors.required">
+            Email is required
+          </ng-container>
+          <ng-container *ngIf="email.errors.email">
+            Email format is invalid
+          </ng-container>
+        </div>
+      </ng-template>
+    </div>
+    <button
+      *ngIf="createMode"
+      [disabled]="userForm.invalid"
+      (click)="onCreate($event)"
+    >
+      Create
+    </button>
+    <button
+      *ngIf="!createMode"
+      [disabled]="userForm.invalid || userForm.pristine"
+      (click)="onUpdate($event)"
+    >
+      Update
+    </button>
+  </form>
 </div>

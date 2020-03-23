@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, SimpleChanges } from '@angular/core';
-import { MessagesService } from '../messages.service';
-import { IMessage } from '../imessage';
+import { MessagesService } from '../services/messages.service';
+import { IMessage } from '../i-message';
 
 @Component({
   selector: 'app-notification',

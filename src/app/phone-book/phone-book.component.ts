@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { PhoneBookService } from '../phone-book.service';
-import { EntityItem } from '../entity-item';
-import { IContact } from '../icontact';
-import { MessagesService } from '../messages.service';
+import { PhoneBookService } from '../services/phone-book.service';
+import { IEntityItem } from '../i-entity-item';
+import { IContact } from '../i-contact';
+import { MessagesService } from '../services/messages.service';
+import { Subject } from 'rxjs';
+import { LoaderService } from '../services/loader.service';
 
 @Component({
   selector: 'app-phone-book',
@@ -11,42 +13,46 @@ import { MessagesService } from '../messages.service';
 })
 export class PhoneBookComponent implements OnInit {
   searchText: string = '';
-  contacts: EntityItem[];
-  filteredContacts: EntityItem[];
-  isLoading: boolean;
+  contacts: IEntityItem[];
+  filteredContacts: IEntityItem[];
+  isLoading: Subject<boolean> = this.loaderService.isLoading;
 
-  constructor(private pbService: PhoneBookService, private msService: MessagesService) { }
+  constructor(
+    private pbService: PhoneBookService,
+    private msService: MessagesService,
+    private loaderService: LoaderService
+  ) { }
 
   ngOnInit(): void {
-    this.pbService.isLoading.subscribe(value => this.isLoading = value);
     this.getContacts();
+    this.pbService.contacts.subscribe((data: IEntityItem[]) => {
+      return this.filteredContacts = data;
+    });
   }
 
   getContacts() {
     this.pbService.getContacts()
-      .subscribe((items: EntityItem[]) => {
+      .subscribe((items: IEntityItem[]) => {
         this.contacts = items;
         this.filteredContacts = items;
-        this.pbService.setIsLoading(false);
       })
   }
 
   onSearch(value) {
     this.filteredContacts = this.contacts.filter((contact: IContact) => {
-      const {name, email, phone} = contact;
+      const { name, email, phone } = contact;
       return this.isInclude(name, value) ||
         this.isInclude(email, value) ||
         this.isInclude(phone, value);
     })
   }
 
-  onDelete(id) {
-    this.pbService.setIsLoading(true);
-    this.pbService.deleteContact(id)
+  onDelete(contact) {
+    this.pbService.deleteContact(contact._id)
       .subscribe(() => {
         this.msService.setMessage({
           type: 'success',
-          text: 'User was successfuly deleted!'
+          text: `${contact.name} was successfuly deleted!`
         });
         this.getContacts();
       });

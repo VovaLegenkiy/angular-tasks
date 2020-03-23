@@ -1,7 +1,7 @@
 <input
   type="text"
-  [value]="text"
+  [(ngModel)]="text"
   [placeholder]="placeholder"
   class="search-input"
-  (input)="onChange($event)"
+  (ngModelChange)="onChange($event)"
 />

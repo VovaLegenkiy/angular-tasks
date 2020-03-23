@@ -2,10 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Contact } from '../contact';
 import { Location } from '@angular/common';
-import { PhoneBookService } from '../phone-book.service';
-import { EntityItem } from '../entity-item';
-import { IContact } from '../icontact';
-import { MessagesService } from '../messages.service';
+import { PhoneBookService } from '../services/phone-book.service';
+import { IEntityItem } from '../i-entity-item';
+import { IContact } from '../i-contact';
+import { MessagesService } from '../services/messages.service';
+import { Subject } from 'rxjs';
+import { LoaderService } from '../services/loader.service';
 
 @Component({
   selector: 'app-create-update-contact',
@@ -15,27 +17,24 @@ import { MessagesService } from '../messages.service';
 export class CreateUpdateContactComponent implements OnInit {
   createMode: boolean = true;
   contact: Contact = new Contact('', '', '');
-  isLoading: boolean;
+  isLoading: Subject<boolean> = this.loaderService.isLoading;
   _id: string;
 
   constructor(
     private route: ActivatedRoute,
     private location: Location,
     private pbService: PhoneBookService,
-    private msService: MessagesService
+    private msService: MessagesService,
+    private loaderService: LoaderService
   ) { }
 
   ngOnInit(): void {
-    this.pbService.isLoading
-      .subscribe((value: boolean) => this.isLoading = value);
-
     this._id = this.route.snapshot.paramMap.get('id');
 
     if (this._id) {
       this.createMode = false;
       this.pbService.getContact(this._id)
         .subscribe((item: IContact) => {
-          this.pbService.setIsLoading(false);
 
           const newItem: IContact = {
             name: item.name,
@@ -57,7 +56,7 @@ export class CreateUpdateContactComponent implements OnInit {
       .subscribe(() => {
         this.msService.setMessage({
           type: 'success',
-          text: 'Contact successfuly created'
+          text: `${this.contact.name} was  successfuly created`
         });
         this.onBack();
       });
@@ -74,7 +73,7 @@ export class CreateUpdateContactComponent implements OnInit {
       .subscribe(() => {
         this.msService.setMessage({
           type: 'success',
-          text: 'Contact successfuly updated'
+          text: `${this.contact.name} successfuly updated`
         });
         this.onBack();
       });
@@ -82,17 +81,16 @@ export class CreateUpdateContactComponent implements OnInit {
     this.chackIfContactExist(body, cb);
   }
 
-  chackIfContactExist(props, callback) {
-    this.pbService.getContacts({ name: this.contact.name })
-      .subscribe((items: EntityItem[]) => {
-        this.pbService.setIsLoading(false);
+  chackIfContactExist(contact, callback) {
+    this.pbService.getContacts({ name: contact.name })
+      .subscribe((items: IEntityItem[]) => {
 
         if (items.length === 0) {
-          callback(props);
+          callback(contact);
         } else {
           this.msService.setMessage({
             type: 'error',
-            text: 'User is already exist'
+            text: `${contact.name} is already exist`
           });
         }
       });
