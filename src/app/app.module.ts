@@ -9,6 +9,7 @@ import { PhoneBookComponent } from './phone-book/phone-book.component';
 import { CreateUpdateContactComponent } from './create-update-contact/create-update-contact.component';
 import { SearchInputComponent } from './search-input/search-input.component';
 import { PhoneTableComponent } from './phone-table/phone-table.component';
+import { NotificationComponent } from './notification/notification.component';
 
 @NgModule({
   declarations: [
@@ -17,6 +18,7 @@ import { PhoneTableComponent } from './phone-table/phone-table.component';
     CreateUpdateContactComponent,
     SearchInputComponent,
     PhoneTableComponent,
+    NotificationComponent,
   ],
   imports: [
     BrowserModule,

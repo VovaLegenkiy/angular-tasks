@@ -1,5 +1,9 @@
-<div class="phone-book">
+<div class="phone-book" *ngIf="!isLoading else loading">
   <h1 class="title">Phone Book</h1>
-  <app-search-input [text]='searchText' placeholder="Search..."></app-search-input>
+  <app-search-input [text]='searchText' placeholder="Search..." (onSearch)="onSearch($event)"></app-search-input>
+  <app-phone-table [contacts]="filteredContacts" (onDelete)="onDelete($event)"></app-phone-table>
   <a routerLink="/create-contact" class="link-like-button">Create Contact</a>
 </div>
+<ng-template #loading>
+  <div>Loading...</div>
+</ng-template>

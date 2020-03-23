@@ -5,6 +5,7 @@ import { Location } from '@angular/common';
 import { PhoneBookService } from '../phone-book.service';
 import { EntityItem } from '../entity-item';
 import { IContact } from '../icontact';
+import { MessagesService } from '../messages.service';
 
 @Component({
   selector: 'app-create-update-contact',
@@ -14,20 +15,28 @@ import { IContact } from '../icontact';
 export class CreateUpdateContactComponent implements OnInit {
   createMode: boolean = true;
   contact: Contact = new Contact('', '', '');
-  isLoading: boolean = false;
+  isLoading: boolean;
   _id: string;
 
-  constructor(private route: ActivatedRoute, private location: Location, private pbService: PhoneBookService) { }
+  constructor(
+    private route: ActivatedRoute,
+    private location: Location,
+    private pbService: PhoneBookService,
+    private msService: MessagesService
+  ) { }
 
   ngOnInit(): void {
+    this.pbService.isLoading
+      .subscribe((value: boolean) => this.isLoading = value);
+
     this._id = this.route.snapshot.paramMap.get('id');
 
     if (this._id) {
       this.createMode = false;
-      this.isLoading = true;
       this.pbService.getContact(this._id)
-        .subscribe(({ item }: { item: IContact }) => {
-          this.isLoading = false;
+        .subscribe((item: IContact) => {
+          this.pbService.setIsLoading(false);
+
           const newItem: IContact = {
             name: item.name,
             phone: item.phone,
@@ -44,14 +53,16 @@ export class CreateUpdateContactComponent implements OnInit {
   }
 
   onCreate(e) {
-    this.pbService.getContacts({ name: this.contact.name })
-      .subscribe(({ items }: { items: EntityItem[] }) => {
-        if (items.length === 0) {
-          this.pbService.createContact(this.contact).subscribe(() => this.onBack());
-        } else {
-          console.log('User already exist');
-        }
+    const cb = () => this.pbService.createContact(this.contact)
+      .subscribe(() => {
+        this.msService.setMessage({
+          type: 'success',
+          text: 'Contact successfuly created'
+        });
+        this.onBack();
       });
+
+    this.chackIfContactExist(this.contact, cb);
   }
 
   onUpdate(e) {
@@ -59,8 +70,31 @@ export class CreateUpdateContactComponent implements OnInit {
       ...this.contact,
       _id: this._id
     }
-    this.pbService.updateContact(body)
-      .subscribe(() => this.onBack());
+    const cb = () => this.pbService.updateContact(body)
+      .subscribe(() => {
+        this.msService.setMessage({
+          type: 'success',
+          text: 'Contact successfuly updated'
+        });
+        this.onBack();
+      });
+
+    this.chackIfContactExist(body, cb);
   }
 
+  chackIfContactExist(props, callback) {
+    this.pbService.getContacts({ name: this.contact.name })
+      .subscribe((items: EntityItem[]) => {
+        this.pbService.setIsLoading(false);
+
+        if (items.length === 0) {
+          callback(props);
+        } else {
+          this.msService.setMessage({
+            type: 'error',
+            text: 'User is already exist'
+          });
+        }
+      });
+  }
 }

@@ -1,0 +1,4 @@
+<div class="notification" [ngClass]="message.type" *ngIf="!isHide">
+    <p class="message">{{message.text}}</p>
+    <button (click)="onClose()" class="close-btn">x</button>
+</div>

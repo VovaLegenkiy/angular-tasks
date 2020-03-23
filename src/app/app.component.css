@@ -1,5 +1,7 @@
 /* AppComponent's private CSS styles */
-
+:root {
+    position: relative;
+}
 h1 {
     font-size: 1.2em;
     margin-bottom: 0;

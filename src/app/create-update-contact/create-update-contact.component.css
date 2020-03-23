@@ -14,3 +14,7 @@
 .form-control.ng-valid.ng-touched {
     border: 1px solid #0f0;
 }
+.back-link {
+    cursor: pointer;
+    text-decoration: underline;
+}

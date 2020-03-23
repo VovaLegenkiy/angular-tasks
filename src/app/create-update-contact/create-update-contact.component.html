@@ -2,7 +2,7 @@
   <h2 class="contact-form-title">
     Create/Update contact
   </h2>
-  <button (click)="onBack()">Back</button>
+  <span class="back-link" (click)="onBack()"><-- Back</span>
   <ng-container *ngIf="!isLoading; else loading">
     <form #userForm="ngForm">
       <div class="form-group">

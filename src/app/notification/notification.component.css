@@ -1,0 +1,33 @@
+.notification {
+  align-items: center;
+  border: 1px solid #000;
+  border-radius: 15px;
+  color: #000;
+  display: flex;
+  justify-content: space-between;
+  left: 50%;
+  padding: 10px;
+  position: absolute;
+  width: 95%;
+  top: 10px;
+  transform: translate(-50%, 0);
+}
+
+.message {
+  width: 90%;
+  margin: 0;
+}
+
+.error {
+  background-color: lightcoral;
+}
+
+.success {
+  background-color: lightgreen;
+}
+
+.close-btn {
+  background-color: transparent;
+  border: none;
+  text-align: right;
+}
