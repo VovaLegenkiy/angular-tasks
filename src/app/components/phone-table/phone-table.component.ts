@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { IEntityItem } from '../i-entity-item';
+import { IEntityItem } from '../../interfaces/i-entity-item';
 
 @Component({
   selector: 'app-phone-table',

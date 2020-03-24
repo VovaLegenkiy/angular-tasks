@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { debounceTime, map, filter, distinctUntilChanged } from 'rxjs/operators';
-import { PhoneBookService } from '../services/phone-book.service';
+import { PhoneBookService } from '../../services/phone-book.service';
 import { Subject } from 'rxjs';
 
 @Component({

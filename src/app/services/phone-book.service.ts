@@ -2,9 +2,9 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { getUrl } from '../utils';
-import { IEntityItem } from '../i-entity-item';
-import { IContact } from '../i-contact';
+import { getUrl } from '../config/utils';
+import { IEntityItem } from '../interfaces/i-entity-item';
+import { IContact } from '../interfaces/i-contact';
 @Injectable({
   providedIn: 'root'
 })

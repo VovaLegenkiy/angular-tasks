@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { PhoneBookService } from '../services/phone-book.service';
-import { IEntityItem } from '../i-entity-item';
-import { IContact } from '../i-contact';
-import { MessagesService } from '../services/messages.service';
+import { PhoneBookService } from '../../services/phone-book.service';
+import { IEntityItem } from '../../interfaces/i-entity-item';
+import { IContact } from '../../interfaces/i-contact';
+import { MessagesService } from '../../services/messages.service';
 import { Subject } from 'rxjs';
-import { LoaderService } from '../services/loader.service';
+import { LoaderService } from '../../services/loader.service';
 
 @Component({
   selector: 'app-phone-book',

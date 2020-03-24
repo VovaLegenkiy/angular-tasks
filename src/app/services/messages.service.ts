@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { IMessage } from '../i-message';
+import { IMessage } from '../interfaces/i-message';
 
 @Injectable({
   providedIn: 'root'

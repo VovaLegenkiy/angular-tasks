@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { PhoneBookComponent } from './phone-book/phone-book.component';
-import { CreateUpdateContactComponent } from './create-update-contact/create-update-contact.component';
+import { PhoneBookComponent } from '../components/phone-book/phone-book.component';
+import { CreateUpdateContactComponent } from '../components/create-update-contact/create-update-contact.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'phone-book', pathMatch: 'full' },

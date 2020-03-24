@@ -1,13 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Contact } from '../contact';
 import { Location } from '@angular/common';
-import { PhoneBookService } from '../services/phone-book.service';
-import { IEntityItem } from '../i-entity-item';
-import { IContact } from '../i-contact';
-import { MessagesService } from '../services/messages.service';
+import { PhoneBookService } from '../../services/phone-book.service';
+import { IEntityItem } from '../../interfaces/i-entity-item';
+import { IContact } from '../../interfaces/i-contact';
+import { MessagesService } from '../../services/messages.service';
 import { Subject } from 'rxjs';
-import { LoaderService } from '../services/loader.service';
+import { LoaderService } from '../../services/loader.service';
 
 @Component({
   selector: 'app-create-update-contact',
@@ -16,7 +15,7 @@ import { LoaderService } from '../services/loader.service';
 })
 export class CreateUpdateContactComponent implements OnInit {
   createMode: boolean = true;
-  contact: Contact = new Contact('', '', '');
+  contact: IContact;
   isLoading: Subject<boolean> = this.loaderService.isLoading;
   _id: string;
 
@@ -26,7 +25,13 @@ export class CreateUpdateContactComponent implements OnInit {
     private pbService: PhoneBookService,
     private msService: MessagesService,
     private loaderService: LoaderService
-  ) { }
+  ) {
+    this.contact = {
+      name: '',
+      phone: '',
+      email: ''
+    }
+  }
 
   ngOnInit(): void {
     this._id = this.route.snapshot.paramMap.get('id');
