@@ -60,8 +60,15 @@ export class PhoneBookService {
   }
 
   search(value) {
-    const filter = value ?
-      { name: `\/${value}\/` } :
+    const lowerValue = value.toLowerCase();
+    const filter = lowerValue ?
+      {
+        '$or': [
+          { name: `${RegExp(value)}` },
+          { phone: `${RegExp(value)}` },
+          { email: `${RegExp(value)}` }
+        ]
+      } :
       {}
 
     return this.getContacts(filter);
