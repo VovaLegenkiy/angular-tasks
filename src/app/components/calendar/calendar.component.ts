@@ -37,6 +37,7 @@ export class CalendarComponent implements OnInit {
     const { year, month, day } = date;
     const eventDate = moment([year, month, day]).format('ddd DD MMM YYYY');
 
+    this.eventText = '';
     this.selectedDate = date;
     this.isHide = false;
     this.dateToAdd = eventDate;
