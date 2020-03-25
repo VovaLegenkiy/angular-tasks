@@ -1,0 +1,23 @@
+<table class="table table-bordered">
+  <thead>
+    <tr class="week table-head">
+      <th *ngFor="let dayName of weekDays" class="field text-center">
+        {{ dayName }}
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let week of calendarData" class="week">
+      <td *ngFor="let date of week" class="day field text-center">
+        <div *ngIf="date" class="date" (click)="onShowAddModal(date)">
+          {{ date.day }}
+        </div>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<ng-template [ngIf]="!isHide">
+  <p>{{dateToAdd}}</p>
+  <input type="text" [(ngModel)]="eventText" />
+  <button (click)="onAddEvent()">Add Event</button>
+</ng-template>

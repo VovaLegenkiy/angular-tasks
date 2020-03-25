@@ -1,0 +1,19 @@
+.field {
+    padding: 0;
+    background-color: lightgrey;
+}
+
+.field:nth-child(6),
+.field:nth-child(7) {
+  background-color: sandybrown;
+}
+
+.date {
+    padding: 5px;
+}
+
+.date:hover {
+    cursor: pointer;
+    padding: 4px;
+    border: 1px solid snow;
+}
