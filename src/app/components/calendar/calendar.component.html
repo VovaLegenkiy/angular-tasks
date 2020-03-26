@@ -1,23 +1,36 @@
-<table class="table table-bordered">
-  <thead>
-    <tr class="week table-head">
-      <th *ngFor="let dayName of weekDays" class="field text-center">
-        {{ dayName }}
-      </th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let week of calendarData" class="week">
-      <td *ngFor="let date of week" class="day field text-center">
-        <div *ngIf="date" class="date" (click)="onShowAddModal(date)">
-          {{ date.day }}
-        </div>
-      </td>
-    </tr>
-  </tbody>
-</table>
-<ng-template [ngIf]="!isHide">
-  <p>{{dateToAdd}}</p>
-  <input type="text" [(ngModel)]="eventText" />
-  <button (click)="onAddEvent()">Add Event</button>
-</ng-template>
+<div class="view-btns">
+  <div class="controls-btn">
+    <button class="btn btn-link" title="Prev {{view | titlecase}}" (click)="prevPeriod(view)"><</button>
+    <button class="btn btn-link" title="Next {{view | titlecase}}" (click)="nextPeriod(view)">></button>
+  </div>
+  <div ngbDropdown class="">
+    <button
+      class="btn btn-outline-primary"
+      id="dropdownBasic1"
+      ngbDropdownToggle
+    >
+      {{ view | titlecase }}
+    </button>
+    <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+      <button
+        (click)="setView(viewName)"
+        *ngFor="let viewName of viewList"
+        ngbDropdownItem
+      >
+        {{ viewName | titlecase }}
+      </button>
+    </div>
+  </div>
+  <span>{{stringDate}}</span>
+</div>
+<div [ngSwitch]="view" class="view">
+  <ng-template ngSwitchCase="week">Week</ng-template>
+  <ng-template ngSwitchCase="day">Day</ng-template>
+  <ng-template ngSwitchDefault>
+    <app-month-view
+      [date]="currentDate"
+      (onShowModal)="onShowAddModal($event)"
+    ></app-month-view>
+  </ng-template>
+</div>
+<app-modal></app-modal>

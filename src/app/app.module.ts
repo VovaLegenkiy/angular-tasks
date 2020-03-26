@@ -8,11 +8,19 @@ import { AppRoutingModule } from './modules/app-routing.module';
 import { AppComponent } from './app.component';
 import { CalendarComponent } from './components/calendar/calendar.component';
 import { HttpClientModule } from '@angular/common/http';
+import { MonthViewComponent } from './components/month-view/month-view.component';
+import { WeekViewComponent } from './components/week-view/week-view.component';
+import { DayViewComponent } from './components/day-view/day-view.component';
+import { ModalComponent } from './components/shared/modal/modal.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     CalendarComponent,
+    MonthViewComponent,
+    WeekViewComponent,
+    DayViewComponent,
+    ModalComponent,
   ],
   imports: [
     BrowserModule,

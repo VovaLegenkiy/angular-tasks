@@ -1,0 +1,31 @@
+.table {
+    height: 100%;
+}
+.field {
+    padding: 0;
+    width: calc(100%/7);
+    background-color: lightgrey;
+}
+
+.field:nth-child(6),
+.field:nth-child(7) {
+  background-color: sandybrown;
+}
+
+.date {
+    position: relative;
+    padding: 5px;
+    height: 100%;
+}
+
+.day-number {
+    position: absolute;
+    top: 2px;
+    left: 5px;
+}
+
+.date:hover {
+    cursor: pointer;
+    padding: 4px;
+    border: 1px solid snow;
+}
