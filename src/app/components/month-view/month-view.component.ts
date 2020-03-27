@@ -7,7 +7,7 @@ import { WEEK_DAYS } from '../../config/constants';
   templateUrl: './month-view.component.html',
   styleUrls: ['./month-view.component.css']
 })
-export class MonthViewComponent implements OnInit, OnChanges {
+export class MonthViewComponent implements OnInit {
   @Input() monthData: Array<IDay[]>;
   @Output() onShowModal = new EventEmitter<IDay>();
   weekDays: string[] = WEEK_DAYS;

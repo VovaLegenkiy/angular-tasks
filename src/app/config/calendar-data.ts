@@ -10,7 +10,7 @@ export class CalendarData {
         return this.generateMonthDays(date);
     }
 
-    getWeekData(date: moment.Moment, monthData: Array<IDay[]>, weekNumber: number): IDay[] {
+    getWeekData(date: moment.Moment, monthData: Array<IDay[]>, weekNumber: number): { monthData: Array<IDay[]>, weekNumber: number } | IDay[] {
         if (!weekNumber) {
             return monthData.find((week: IDay[]): IDay | undefined => week
                 .find((day: IDay): boolean => day.isToday));
@@ -47,11 +47,11 @@ export class CalendarData {
         });
     };
 
-    generateWeekDays(date: moment.Moment, monthData: Array<IDay[]>, weekNumber: number) {
+    generateWeekDays(date: moment.Moment, monthData: Array<IDay[]>, weekNumber: number): { monthData: Array<IDay[]>, weekNumber: number } {
         const isLastWeek = weekNumber === monthData.length;
         const newMonthData = this.generateMonthDays(date);
         const newWeekNumber = isLastWeek ? 1 : newMonthData.length - 2;
-        
+
         return {
             monthData: newMonthData,
             weekNumber: newWeekNumber
