@@ -29,3 +29,9 @@
     padding: 4px;
     border: 1px solid snow;
 }
+
+.today {
+    background-color: cornflowerblue;
+    padding: 2px 5px;
+    border-radius: 50%;
+}

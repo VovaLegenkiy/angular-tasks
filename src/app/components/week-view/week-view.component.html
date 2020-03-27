@@ -1,1 +1,23 @@
-<p>week-view works!</p>
+<table class="table table-bordered">
+  <thead>
+    <tr class="week table-head">
+      <th *ngFor="let dayName of weekDays" class="field text-center">
+        {{ dayName | titlecase }}
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr class="week">
+      <td *ngFor="let date of weekData" class="day field text-center">
+        <div *ngIf="date" class="date" (click)="onShowAddModal(date)">
+          <span class="day-number" [ngClass]="{ today: date.isToday }">{{
+            date.date
+          }}</span>
+          <span *ngFor="let event of date.events" class="event">
+            {{ event }}
+          </span>
+        </div>
+      </td>
+    </tr>
+  </tbody>
+</table>

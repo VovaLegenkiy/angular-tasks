@@ -1,9 +1,23 @@
 <div class="view-btns">
   <div class="controls-btn">
-    <button class="btn btn-link" title="Prev {{view | titlecase}}" (click)="changePeriod(view, 'prev')"><</button>
-    <button class="btn btn-link" title="Next {{view | titlecase}}" (click)="changePeriod(view, 'next')">></button>
+    <button class="btn btn-primary" (click)="setToday($event)">Today</button>
+    <button
+      class="btn btn-link"
+      title="Prev {{ view | titlecase }}"
+      (click)="changePeriod(view, 'prev')"
+    >
+      <
+    </button>
+    <button
+      class="btn btn-link"
+      title="Next {{ view | titlecase }}"
+      (click)="changePeriod(view, 'next')"
+    >
+      >
+    </button>
+    <span class="string-date">{{ stringDate }}</span>
   </div>
-  <div ngbDropdown class="">
+  <div ngbDropdown class="view-list">
     <button
       class="btn btn-outline-primary"
       id="dropdownBasic1"
@@ -21,14 +35,18 @@
       </button>
     </div>
   </div>
-  <span class='string-date'>{{stringDate}}</span>
 </div>
 <div [ngSwitch]="view" class="view">
-  <ng-template ngSwitchCase="week">Week</ng-template>
+  <ng-template ngSwitchCase="week">
+    <app-week-view
+      [weekData]="weekData"
+      (onShowModal)="onShowAddModal($event)"
+    ></app-week-view>
+  </ng-template>
   <ng-template ngSwitchCase="day">Day</ng-template>
   <ng-template ngSwitchDefault>
     <app-month-view
-      [date]="currentDate"
+      [monthData]="monthData"
       (onShowModal)="onShowAddModal($event)"
     ></app-month-view>
   </ng-template>
