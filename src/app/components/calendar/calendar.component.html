@@ -1,7 +1,7 @@
 <div class="view-btns">
   <div class="controls-btn">
-    <button class="btn btn-link" title="Prev {{view | titlecase}}" (click)="prevPeriod(view)"><</button>
-    <button class="btn btn-link" title="Next {{view | titlecase}}" (click)="nextPeriod(view)">></button>
+    <button class="btn btn-link" title="Prev {{view | titlecase}}" (click)="changePeriod(view, 'prev')"><</button>
+    <button class="btn btn-link" title="Next {{view | titlecase}}" (click)="changePeriod(view, 'next')">></button>
   </div>
   <div ngbDropdown class="">
     <button
@@ -21,7 +21,7 @@
       </button>
     </div>
   </div>
-  <span>{{stringDate}}</span>
+  <span class='string-date'>{{stringDate}}</span>
 </div>
 <div [ngSwitch]="view" class="view">
   <ng-template ngSwitchCase="week">Week</ng-template>

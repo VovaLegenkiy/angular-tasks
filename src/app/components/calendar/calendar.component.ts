@@ -27,11 +27,12 @@ export class CalendarComponent implements OnInit {
   ngOnChanges(props: SimpleChanges) {    
   }
 
-  nextPeriod(view) {
+  changePeriod(view, direction) {
     switch (view) {
       case 'month':
         const month = this.currentDate.month();
-        const newDate = moment(this.currentDate.set({'month': month + 1, 'date': 1}));
+        const newMonth = direction === 'next' ? month + 1 : month - 1;
+        const newDate = moment(this.currentDate.set({'month': newMonth, 'date': 1}));
         this.currentDate = newDate;
         this.setStringDate(newDate);
         break;
@@ -41,18 +42,6 @@ export class CalendarComponent implements OnInit {
 
   }
 
-  prevPeriod(view) {
-    switch (view) {
-      case 'month':
-        const month = this.currentDate.month();
-        const newDate = moment(this.currentDate.set({ 'month': month - 1, 'date': 1 }));
-        this.currentDate = newDate;
-        this.setStringDate(newDate);
-        break;
-      case 'week':
-      case 'day':
-    }
-  }
   setView(view) {
     this.view = view;
   }
