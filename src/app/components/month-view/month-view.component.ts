@@ -1,6 +1,6 @@
 import { Component, OnInit, Output, EventEmitter, Input, SimpleChanges, OnChanges } from '@angular/core';
 import { IDay } from 'src/app/interfaces/i-day';
-import { WEEK_DAYS } from '../../config/constants';
+import { WEEK_DAYS } from 'src/app/config/constants';
 
 @Component({
   selector: 'app-month-view',

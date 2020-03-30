@@ -1,16 +1,16 @@
-import * as moment from 'moment';
 import { IDay } from '../interfaces/i-day';
+import { DateUtils } from './utils';
 
 export class CalendarData {
     weekNumber: number;
     constructor() {
 
     }
-    getMonthData(date: moment.Moment): Array<IDay[]> {
+    getMonthData(date: Date): Array<IDay[]> {
         return this.generateMonthDays(date);
     }
 
-    getWeekData(date: moment.Moment, monthData: Array<IDay[]>, weekNumber: number): { monthData: Array<IDay[]>, weekNumber: number } | IDay[] {
+    getWeekData(date: Date, monthData: Array<IDay[]>, weekNumber: number): { monthData: Array<IDay[]>, weekNumber: number } | IDay[] {
         if (!weekNumber) {
             return monthData.find((week: IDay[]): IDay | undefined => week
                 .find((day: IDay): boolean => day.isToday));
@@ -18,36 +18,37 @@ export class CalendarData {
         return this.generateWeekDays(date, monthData, weekNumber);
     }
 
-    generateMonthDays(date: moment.Moment): Array<IDay[]> {
+    generateMonthDays(date: Date): Array<IDay[]> {
         let firstDate = 0;
         const { firstMonthWeekDay, lastMonthWeekDay, weeksInMonth, year, month } = this.getConfig(date);
         const emptyWeekData = new Array(7).fill(null);
         const emptyMonthData = new Array(weeksInMonth).fill(emptyWeekData);
+        const todayString = DateUtils.todayString();
 
         return emptyMonthData.map((item: null[], i: number): IDay[] => {
             return item.map((value: null, j: number): IDay => {
                 const isEmptyFirstWeekField = i === 0 && j < firstMonthWeekDay;
                 const isEmptyLastWeekField = i + 1 === weeksInMonth && j > lastMonthWeekDay;
-                let date;
+                let monthDate;
                 let newMonth = month;
                 if (isEmptyFirstWeekField) {
-                    const newDate = moment().set({ year, month, date: j + 1 - firstMonthWeekDay });
-                    date = newDate.date();
-                    newMonth = newDate.month();
+                    const newDate = new Date(year, month, j + 1 - firstMonthWeekDay);
+                    monthDate = newDate.getDate();
+                    newMonth = newDate.getMonth();
                 } else if (isEmptyLastWeekField) {
                     newMonth = month + 1;
-                    date = moment().set({ year, month: newMonth, date: j - lastMonthWeekDay }).date();
+                    monthDate = new Date(year, newMonth, j - lastMonthWeekDay).getDate();
                 } else {
-                    date = ++firstDate;
+                    monthDate = ++firstDate;
                 }
-                const isToday = moment([year, newMonth, date]).calendar().split(' ')[0] === 'Today';
+                const isToday = new Date(year, newMonth, monthDate).toDateString() === todayString;
 
-                return { year, month: newMonth, date, week: i, events: [], isToday };
+                return { date: new Date(year, newMonth, monthDate).toDateString(), monthDate, week: i, events: [], isToday };
             })
         });
     };
 
-    generateWeekDays(date: moment.Moment, monthData: Array<IDay[]>, weekNumber: number): { monthData: Array<IDay[]>, weekNumber: number } {
+    generateWeekDays(date: Date, monthData: Array<IDay[]>, weekNumber: number): { monthData: Array<IDay[]>, weekNumber: number } {
         const isLastWeek = weekNumber === monthData.length;
         const newMonthData = this.generateMonthDays(date);
         const newWeekNumber = isLastWeek ? 1 : newMonthData.length - 2;
@@ -58,12 +59,24 @@ export class CalendarData {
         }
     }
 
-    getConfig(date: moment.Moment) {
-        const year = date.year();
-        const month = date.month();
-        const firstMonthWeekDay = this.getDay(moment([year, month, 1]));
+    generateDay(date: Date): IDay {
+        const monthDate = date.getDate();
+        const stringDate = date.toDateString();
+
+        return {
+            date: stringDate,
+            monthDate,
+            events: [],
+            isToday: new Date().toDateString() === stringDate
+        };
+    }
+
+    getConfig(date: Date) {
+        const year = date.getFullYear();
+        const month = date.getMonth();
+        const firstMonthWeekDay = this.getDay(new Date(year, month, 1));
         const lastMonthDate = this.getDaysInMonth(year, month);
-        const lastMonthWeekDay = this.getDay(moment([year, month, lastMonthDate]));
+        const lastMonthWeekDay = this.getDay(new Date(year, month, lastMonthDate));
         const daysInMonth = firstMonthWeekDay + lastMonthDate;
         const weeksInMonth = this.getWeeksInMonth(daysInMonth);
 
@@ -76,17 +89,17 @@ export class CalendarData {
         }
     }
 
-    getDay(date: moment.Moment): number {
-        const day = date.day();
+    getDay(date: Date): number {
+        const day = date.getDay();
         // -1: to match a day to array's index
         return day === 0 ? 6 : day - 1;
     }
 
-    getDaysInMonth(year, month): number {
+    getDaysInMonth(year: number, month: number): number {
         // we increase a month to +1 and set a day to 0, 
         // 0 it's like a day before a first day in next month,
         // so we can get the last day in the month we need to now 
-        return moment().set({ year, 'M': month + 1, 'D': 0 }).date();
+        return new Date(year, month + 1, 0).getDate();
     }
 
     getWeeksInMonth(daysInMonth): number {

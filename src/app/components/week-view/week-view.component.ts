@@ -1,6 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { WEEK_DAYS } from '../../config/constants';
-import { Moment } from 'moment';
 import { IDay } from 'src/app/interfaces/i-day';
 
 @Component({

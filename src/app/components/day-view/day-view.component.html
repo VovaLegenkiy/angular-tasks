@@ -1,1 +1,23 @@
-<p>day-view works!</p>
+<table class="table table-bordered">
+  <thead>
+    <tr class="week table-head">
+      <th class="field text-left">
+        {{ weekDay | titlecase }}
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr class="week">
+      <td class="day field text-center">
+        <div *ngIf="dayData" class="date" (click)="onShowAddModal(dayData)">
+          <span class="day-number" [ngClass]="{ today: dayData.isToday }">{{
+            dayData.monthDate
+          }}</span>
+          <span *ngFor="let event of dayData.events" class="event">
+            {{ event }}
+          </span>
+        </div>
+      </td>
+    </tr>
+  </tbody>
+</table>

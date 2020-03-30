@@ -9,6 +9,7 @@ import { CalendarService } from 'src/app/services/calendar.service';
 })
 export class ModalComponent implements OnInit {
   isShow: boolean;
+  dateString: string;
   selectedDate;
   eventText: string = '';
   @Input() date = '';
@@ -26,6 +27,10 @@ export class ModalComponent implements OnInit {
     this.modal.isShow
       .subscribe((val: boolean) => {
         return this.isShow = val;
+      });
+    this.modal.dateString
+      .subscribe((date: string) => {
+        return this.dateString = date;
       });
   }
 

@@ -11,7 +11,7 @@
       <td *ngFor="let date of week" class="day field text-center">
         <div *ngIf="date" class="date" (click)="onShowAddModal(date)">
           <span class="day-number" [ngClass]="{ today: date.isToday }">{{
-            date.date
+            date.monthDate
           }}</span>
           <span *ngFor="let event of date.events" class="event">
             {{ event }}
